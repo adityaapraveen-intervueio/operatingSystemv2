@@ -459,7 +459,7 @@ function HubSpotForm() {
           font-family: 'Inter', sans-serif !important;
         }
         #hubspot-form-container .hs-form * {
-          color: #ffffff !important;
+          color: white !important;
         }
         #hubspot-form-container .hs-form fieldset {
           max-width: 100% !important;
@@ -470,7 +470,7 @@ function HubSpotForm() {
           background: rgba(255, 255, 255, 0.05) !important;
           border: 1px solid rgba(255, 255, 255, 0.1) !important;
           border-radius: 12px !important;
-          color: #ffffff !important;
+          color: white !important;
           font-size: 14px !important;
           transition: all 0.2s !important;
           box-sizing: border-box !important;
@@ -489,12 +489,23 @@ function HubSpotForm() {
         #hubspot-form-container .hs-form legend span,
         #hubspot-form-container .hs-form .hs-form-field > label,
         #hubspot-form-container .hs-form .hs-field-desc,
-        #hubspot-form-container .hs-form .hs-form-required {
-          color: #ffffff !important;
+        #hubspot-form-container .hs-form .hs-form-required,
+        #hubspot-form-container .hs-form .hs-form-booleancheckbox-display span,
+        #hubspot-form-container .hs-form .hs-form-radio-display span,
+        #hubspot-form-container .hs-form .inputs-list label {
+          color: white !important;
           font-size: 14px !important;
           font-weight: 500 !important;
           margin-bottom: 6px !important;
           display: block !important;
+        }
+        #hubspot-form-container .hs-form .hs-form-booleancheckbox-display span,
+        #hubspot-form-container .hs-form .hs-form-radio-display span,
+        #hubspot-form-container .hs-form .inputs-list label {
+          display: inline !important;
+          font-size: 13px !important;
+          font-weight: 400 !important;
+          margin-bottom: 0 !important;
         }
         #hubspot-form-container .hs-form .hs-error-msgs label {
           color: #f87171 !important;
@@ -507,7 +518,7 @@ function HubSpotForm() {
           width: 100% !important;
           padding: 16px 24px !important;
           background: #7c3aed !important;
-          color: #ffffff !important;
+          color: white !important;
           border: none !important;
           border-radius: 12px !important;
           font-size: 18px !important;
@@ -534,10 +545,10 @@ function HubSpotForm() {
         }
         #hubspot-form-container .hs-form select.hs-input option {
           background: #1a1030 !important;
-          color: #ffffff !important;
+          color: white !important;
         }
         #hubspot-form-container .submitted-message {
-          color: #ffffff !important;
+          color: white !important;
           font-size: 16px !important;
           text-align: center !important;
           padding: 20px 0 !important;
@@ -632,11 +643,11 @@ function HeroSection({ formRef, formHighlight }: { formRef: React.RefObject<HTML
         <motion.div
           ref={formRef}
           variants={itemVariants}
-          className={`relative bg-white/15 backdrop-blur-xl border-2 rounded-3xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-[border-color] duration-700 ease-in-out ${formHighlight ? 'border-[#7c3aed]/70' : 'border-white/10'
+          className={`relative bg-white/5 backdrop-blur-xl border-2 rounded-3xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-[border-color] duration-700 ease-in-out ${formHighlight ? 'border-[#7c3aed]/70' : 'border-white/10'
             }`}
         >
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/15 to-indigo-500/15 rounded-3xl pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 rounded-3xl pointer-events-none" />
 
           <div className="relative z-10">
             <h3 className="text-2xl font-serif text-white mb-2">Get Early Access</h3>
