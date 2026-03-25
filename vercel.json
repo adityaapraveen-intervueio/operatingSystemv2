@@ -5,7 +5,7 @@
             "headers": [
                 {
                     "key": "Content-Security-Policy",
-                    "value": "frame-ancestors *;"
+                    "value": "frame-ancestors *; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.hsforms.net https://*.hsforms.com https://*.hubspot.com https://*.hs-analytics.net https://*.hs-banner.com https://*.hs-scripts.com https://*.hscollectedforms.net https://*.hubapi.com; connect-src 'self' https://*.hsforms.com https://*.hubspot.com https://*.hubapi.com https://*.hs-analytics.net https://*.hscollectedforms.net https://*.hsforms.net; img-src 'self' data: https://*.hsforms.com https://*.hubspot.com; style-src 'self' 'unsafe-inline' https://*.hsforms.net https://*.hsforms.com; font-src 'self' https://fonts.gstatic.com data:;"
                 },
                 {
                     "key": "X-Frame-Options",
