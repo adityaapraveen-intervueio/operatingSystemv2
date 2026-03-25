@@ -424,6 +424,39 @@ function HubSpotForm() {
           formId: "b2ebc245-2f6a-460a-980d-9be74a111d9a",
           region: "na2",
           target: `#hubspot-form-container`,
+          onFormSubmit: function ($form: any) {
+            // Direct API submission fallback for iframe/cross-origin environments
+            // This ensures data is captured even when third-party cookies are blocked
+            try {
+              const formEl = $form[0] || $form;
+              const inputs = formEl.querySelectorAll('input, select, textarea');
+              const fields: { name: string; value: string }[] = [];
+              inputs.forEach((input: any) => {
+                const name = input.name;
+                const value = input.type === 'checkbox' ? (input.checked ? 'true' : 'false') : input.value;
+                if (name && !name.startsWith('hs_') && value) {
+                  fields.push({ name, value });
+                }
+              });
+
+              fetch(
+                'https://api.hsforms.com/submissions/v3/integration/submit/20086546/b2ebc245-2f6a-460a-980d-9be74a111d9a',
+                {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    fields,
+                    context: {
+                      pageUri: window.location.href,
+                      pageName: document.title,
+                    },
+                  }),
+                }
+              ).catch(() => { });
+            } catch (e) {
+              // Silently fail — the default HubSpot submission may still succeed
+            }
+          },
         });
       }
     };
