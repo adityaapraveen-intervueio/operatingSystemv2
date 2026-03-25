@@ -402,8 +402,6 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen, scrollToForm }: { mobil
               }`}
           >
             <div className="px-6 py-6 pb-8 space-y-6 flex flex-col items-center">
-              <a href="#solution" onClick={() => setMobileMenuOpen(false)} className={`block text-lg font-medium transition-colors ${isLightSection ? 'text-gray-700 hover:text-gray-900' : 'text-gray-300 hover:text-white'}`}>Solution</a>
-              <a href="#features" onClick={() => setMobileMenuOpen(false)} className={`block text-lg font-medium transition-colors ${isLightSection ? 'text-gray-700 hover:text-gray-900' : 'text-gray-300 hover:text-white'}`}>Features</a>
               <button onClick={() => { setMobileMenuOpen(false); scrollToForm(); }} className="inline-block px-8 py-3 bg-[#7c3aed] shadow-md text-white rounded-full font-medium text-center cursor-pointer">Get Started</button>
             </div>
           </motion.div>
