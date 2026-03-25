@@ -414,75 +414,10 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen, scrollToForm }: { mobil
 }
 
 // HubSpot Embedded Form Component
-const HUBSPOT_FORM_CSS = `
-  .hs-form { font-family: 'Inter', sans-serif !important; }
-  .hs-form *, .hs-form label, .hs-form label span, .hs-form legend,
-  .hs-form legend span, .hs-form .hs-form-field > label,
-  .hs-form .hs-field-desc, .hs-form .hs-form-required,
-  .hs-form .hs-form-booleancheckbox-display span,
-  .hs-form .hs-form-radio-display span,
-  .hs-form .inputs-list label { color: #ffffff !important; }
-  .hs-form fieldset { max-width: 100% !important; }
-  .hs-form .hs-input {
-    width: 100% !important; padding: 12px 16px !important;
-    background: rgba(255,255,255,0.05) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    border-radius: 12px !important; color: #ffffff !important;
-    font-size: 14px !important; transition: all 0.2s !important;
-    box-sizing: border-box !important;
-  }
-  .hs-form .hs-input:focus {
-    outline: none !important; border-color: #7c3aed !important;
-    box-shadow: 0 0 0 2px rgba(124,58,237,0.4) !important;
-  }
-  .hs-form .hs-input::placeholder { color: rgba(255,255,255,0.35) !important; }
-  .hs-form label {
-    color: #ffffff !important; font-size: 14px !important;
-    font-weight: 500 !important; margin-bottom: 6px !important;
-    display: block !important;
-  }
-  .hs-form .hs-error-msgs label { color: #f87171 !important; font-size: 12px !important; }
-  .hs-form .field { margin-bottom: 16px !important; }
-  .hs-form .hs-button {
-    width: 100% !important; padding: 16px 24px !important;
-    background: #7c3aed !important; color: #ffffff !important;
-    border: none !important; border-radius: 12px !important;
-    font-size: 18px !important; font-weight: 500 !important;
-    cursor: pointer !important; transition: all 0.2s !important;
-    box-shadow: 0 0 30px rgba(124,58,237,0.4) !important;
-    margin-top: 8px !important;
-  }
-  .hs-form .hs-button:hover { background: #6d28d9 !important; transform: scale(1.02) !important; }
-  .hs-form .hs-richtext { color: rgba(156,163,175,1) !important; font-size: 12px !important; }
-  .hs-form .hs-richtext a { color: #a78bfa !important; }
-  .hs-form select.hs-input { appearance: auto !important; background: rgba(255,255,255,0.05) !important; }
-  .hs-form select.hs-input option { background: #1a1030 !important; color: #ffffff !important; }
-  .submitted-message { color: #ffffff !important; font-size: 16px !important; text-align: center !important; padding: 20px 0 !important; }
-  body { background: transparent !important; }
-`;
-
 function HubSpotForm() {
   const hubspotContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const injectStylesIntoIframe = () => {
-      const container = hubspotContainerRef.current;
-      if (!container) return;
-      const iframe = container.querySelector('iframe');
-      if (iframe) {
-        try {
-          const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-          if (iframeDoc) {
-            const style = iframeDoc.createElement('style');
-            style.textContent = HUBSPOT_FORM_CSS;
-            iframeDoc.head.appendChild(style);
-          }
-        } catch (e) {
-          // Cross-origin iframe, can't inject
-        }
-      }
-    };
-
     const loadForm = () => {
       if ((window as any).hbspt && hubspotContainerRef.current) {
         hubspotContainerRef.current.innerHTML = '';
@@ -491,13 +426,6 @@ function HubSpotForm() {
           formId: "b2ebc245-2f6a-460a-980d-9be74a111d9a",
           region: "na2",
           target: `#hubspot-form-container`,
-          cssRequired: HUBSPOT_FORM_CSS,
-          onFormReady: () => {
-            // Inject styles into iframe after form is ready
-            setTimeout(() => injectStylesIntoIframe(), 100);
-            setTimeout(() => injectStylesIntoIframe(), 500);
-            setTimeout(() => injectStylesIntoIframe(), 1500);
-          },
         });
       }
     };
@@ -524,14 +452,97 @@ function HubSpotForm() {
     };
   }, []);
 
-  // Prefix selectors for non-iframe case
-  const prefixedCSS = HUBSPOT_FORM_CSS.replace(/\.hs-form/g, '#hubspot-form-container .hs-form')
-    .replace(/#hubspot-form-container \.hs-form \.hs-form/g, '#hubspot-form-container .hs-form .hs-form')
-    .replace(/\.submitted-message/g, '#hubspot-form-container .submitted-message');
-
   return (
     <>
-      <style>{prefixedCSS}</style>
+      <style>{`
+        #hubspot-form-container .hs-form {
+          font-family: 'Inter', sans-serif !important;
+        }
+        #hubspot-form-container .hs-form * {
+          color: #ffffff !important;
+        }
+        #hubspot-form-container .hs-form fieldset {
+          max-width: 100% !important;
+        }
+        #hubspot-form-container .hs-form .hs-input {
+          width: 100% !important;
+          padding: 12px 16px !important;
+          background: rgba(255, 255, 255, 0.05) !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          border-radius: 12px !important;
+          color: #ffffff !important;
+          font-size: 14px !important;
+          transition: all 0.2s !important;
+          box-sizing: border-box !important;
+        }
+        #hubspot-form-container .hs-form .hs-input:focus {
+          outline: none !important;
+          border-color: #7c3aed !important;
+          box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.4) !important;
+        }
+        #hubspot-form-container .hs-form .hs-input::placeholder {
+          color: rgba(255, 255, 255, 0.35) !important;
+        }
+        #hubspot-form-container .hs-form label,
+        #hubspot-form-container .hs-form label span,
+        #hubspot-form-container .hs-form legend,
+        #hubspot-form-container .hs-form legend span,
+        #hubspot-form-container .hs-form .hs-form-field > label,
+        #hubspot-form-container .hs-form .hs-field-desc,
+        #hubspot-form-container .hs-form .hs-form-required {
+          color: #ffffff !important;
+          font-size: 14px !important;
+          font-weight: 500 !important;
+          margin-bottom: 6px !important;
+          display: block !important;
+        }
+        #hubspot-form-container .hs-form .hs-error-msgs label {
+          color: #f87171 !important;
+          font-size: 12px !important;
+        }
+        #hubspot-form-container .hs-form .field {
+          margin-bottom: 16px !important;
+        }
+        #hubspot-form-container .hs-form .hs-button {
+          width: 100% !important;
+          padding: 16px 24px !important;
+          background: #7c3aed !important;
+          color: #ffffff !important;
+          border: none !important;
+          border-radius: 12px !important;
+          font-size: 18px !important;
+          font-weight: 500 !important;
+          cursor: pointer !important;
+          transition: all 0.2s !important;
+          box-shadow: 0 0 30px rgba(124, 58, 237, 0.4) !important;
+          margin-top: 8px !important;
+        }
+        #hubspot-form-container .hs-form .hs-button:hover {
+          background: #6d28d9 !important;
+          transform: scale(1.02) !important;
+        }
+        #hubspot-form-container .hs-form .hs-richtext {
+          color: rgba(156, 163, 175, 1) !important;
+          font-size: 12px !important;
+        }
+        #hubspot-form-container .hs-form .hs-richtext a {
+          color: #a78bfa !important;
+        }
+        #hubspot-form-container .hs-form select.hs-input {
+          appearance: auto !important;
+          background: rgba(255, 255, 255, 0.05) !important;
+        }
+        #hubspot-form-container .hs-form select.hs-input option {
+          background: #1a1030 !important;
+          color: #ffffff !important;
+        }
+        #hubspot-form-container .submitted-message {
+          color: #ffffff !important;
+          font-size: 16px !important;
+          text-align: center !important;
+          padding: 20px 0 !important;
+        }
+      `}</style>
       <div id="hubspot-form-container" ref={hubspotContainerRef} />
     </>
   );
@@ -621,11 +632,11 @@ function HeroSection({ formRef, formHighlight }: { formRef: React.RefObject<HTML
         <motion.div
           ref={formRef}
           variants={itemVariants}
-          className={`relative bg-white/5 backdrop-blur-xl border-2 rounded-3xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-[border-color] duration-700 ease-in-out ${formHighlight ? 'border-[#7c3aed]/70' : 'border-white/10'
+          className={`relative bg-white/15 backdrop-blur-xl border-2 rounded-3xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-[border-color] duration-700 ease-in-out ${formHighlight ? 'border-[#7c3aed]/70' : 'border-white/10'
             }`}
         >
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 rounded-3xl pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/15 to-indigo-500/15 rounded-3xl pointer-events-none" />
 
           <div className="relative z-10">
             <h3 className="text-2xl font-serif text-white mb-2">Get Early Access</h3>
