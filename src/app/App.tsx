@@ -414,42 +414,55 @@ function Navigation({ mobileMenuOpen, setMobileMenuOpen, scrollToForm }: { mobil
 // HubSpot Embedded Form Component
 function HubSpotForm() {
   const hubspotContainerRef = useRef<HTMLDivElement>(null);
+  const formCreated = useRef(false);
 
   useEffect(() => {
-    const loadForm = () => {
-      if ((window as any).hbspt && hubspotContainerRef.current) {
-        hubspotContainerRef.current.innerHTML = '';
-        (window as any).hbspt.forms.create({
-          portalId: "20086546",
-          formId: "b2ebc245-2f6a-460a-980d-9be74a111d9a",
-          region: "na2",
-          target: `#hubspot-form-container`,
-          cssRequired: '',
-        });
-      }
+    if (formCreated.current) return; // prevent duplicate creation
+
+    const createForm = () => {
+      if (!(window as any).hbspt || !hubspotContainerRef.current) return;
+
+      formCreated.current = true;
+      hubspotContainerRef.current.innerHTML = '';
+
+      (window as any).hbspt.forms.create({
+        portalId: "20086546",
+        formId: "b2ebc245-2f6a-460a-980d-9be74a111d9a",
+        region: "na2",
+        target: "#hubspot-form-container",
+        onFormSubmit: function ($form: any) {
+          console.log("HubSpot form submitted", $form);
+        },
+        onFormSubmitted: function ($form: any, data: any) {
+          console.log("HubSpot form submission confirmed", data);
+        },
+      });
     };
 
-    // Check if script already loaded
     if ((window as any).hbspt) {
-      loadForm();
+      createForm();
       return;
     }
 
-    // Load HubSpot script
+    // Check if script already exists in DOM
+    const existingScript = document.querySelector(
+      'script[src="//js-na2.hsforms.net/forms/embed/v2.js"]'
+    );
+
+    if (existingScript) {
+      existingScript.addEventListener('load', createForm);
+      return;
+    }
+
     const script = document.createElement('script');
     script.src = '//js-na2.hsforms.net/forms/embed/v2.js';
     script.charset = 'utf-8';
     script.type = 'text/javascript';
     script.async = true;
-    script.onload = () => {
-      loadForm();
-    };
+    script.onload = createForm;
     document.head.appendChild(script);
 
-    return () => {
-      // Cleanup: don't remove script as it may be reused
-    };
-  }, []);
+  }, []); // empty deps — run once only
 
   return (
     <>

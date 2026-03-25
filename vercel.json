@@ -5,15 +5,7 @@
             "headers": [
                 {
                     "key": "Content-Security-Policy",
-                    "value": "frame-ancestors *; script-src * 'self' 'unsafe-inline' 'unsafe-eval'; connect-src * 'self'; img-src * 'self' data:; style-src * 'self' 'unsafe-inline'; font-src * 'self' data:;"
-                },
-                {
-                    "key": "X-Frame-Options",
-                    "value": "ALLOWALL"
-                },
-                {
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "*"
+                    "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.hsforms.net https://*.hsforms.com https://*.hubspot.com; connect-src 'self' https://*.hubspot.com https://*.hsforms.com; frame-src https://*.hsforms.com; style-src 'self' 'unsafe-inline' https://*.hsforms.net https://*.hsforms.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;"
                 }
             ]
         }
