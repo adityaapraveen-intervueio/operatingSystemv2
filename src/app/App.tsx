@@ -291,7 +291,7 @@ function LandingPageView() {
   };
 
   return (
-    <div className="w-full min-h-screen overflow-y-auto overflow-x-hidden bg-[#0B051A] text-white font-sans px-[0px] pt-[95px] pb-[0px]" style={{ zoom: 0.8 }}>
+    <div className="w-full min-h-screen overflow-y-auto overflow-x-hidden bg-[#0B051A] text-white font-sans px-[0px] pt-[95px] pb-[120px]" style={{ zoom: 0.8 }}>
       {/* Navigation */}
       <Navigation mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} scrollToForm={scrollToForm} />
 
@@ -655,15 +655,15 @@ function HeroSection({ formRef, formHighlight }: { formRef: React.RefObject<HTML
         <motion.div
           ref={formRef}
           variants={itemVariants}
-          className={`relative bg-white/5 backdrop-blur-xl border-2 rounded-3xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-[border-color] duration-700 ease-in-out ${formHighlight ? 'border-[#7c3aed]/70' : 'border-white/10'
+          className={`relative bg-white/80 backdrop-blur-xl border-2 rounded-3xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-[border-color] duration-700 ease-in-out ${formHighlight ? 'border-[#7c3aed]/70' : 'border-white/10'
             }`}
         >
           {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 rounded-3xl pointer-events-none" />
 
           <div className="relative z-10">
-            <h3 className="text-2xl font-serif text-white mb-2">Get Early Access</h3>
-            <p className="text-gray-400 mb-6 text-sm">Join the waitlist and transform your hiring process.</p>
+            <h3 className="text-2xl font-serif text-black mb-2">Get Early Access</h3>
+            <p className="text-black mb-6 text-sm">Join the waitlist and transform your hiring process.</p>
 
             {/* HubSpot Form Embed */}
             <HubSpotForm />
