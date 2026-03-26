@@ -281,6 +281,22 @@ function LandingPageView() {
   const formRef = useRef<HTMLDivElement>(null);
   const [formHighlight, setFormHighlight] = React.useState(false);
 
+  useEffect(() => {
+    const sendHeight = () => {
+      const height = document.documentElement.scrollHeight;
+      window.parent.postMessage({ type: 'resize', height }, '*');
+    };
+
+    sendHeight();
+    window.addEventListener('resize', sendHeight);
+    window.addEventListener('load', sendHeight);
+
+    return () => {
+      window.removeEventListener('resize', sendHeight);
+      window.removeEventListener('load', sendHeight);
+    };
+  }, []);
+
   const scrollToForm = () => {
     if (formRef.current) {
       formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -291,7 +307,7 @@ function LandingPageView() {
   };
 
   return (
-    <div className="w-full min-h-screen overflow-y-auto overflow-x-hidden bg-[#0B051A] text-white font-sans px-[0px] pt-[95px] pb-[120px]" style={{ zoom: 0.8 }}>
+    <div className="w-full min-h-screen overflow-y-auto overflow-x-hidden bg-[#0B051A] text-white font-sans px-[0px] pt-[95px] pb-[120px]">
       {/* Navigation */}
       <Navigation mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} scrollToForm={scrollToForm} />
 
@@ -527,23 +543,47 @@ function HubSpotForm() {
           margin-bottom: 16px !important;
         }
         #hubspot-form-container .hs-form .hs-button {
-          width: 100% !important;
-          padding: 16px 24px !important;
-          background: #7c3aed !important;
-          color: white !important;
-          border: none !important;
-          border-radius: 12px !important;
-          font-size: 18px !important;
-          font-weight: 500 !important;
-          cursor: pointer !important;
-          transition: all 0.2s !important;
-          box-shadow: 0 0 30px rgba(124, 58, 237, 0.4) !important;
-          margin-top: 8px !important;
-        }
-        #hubspot-form-container .hs-form .hs-button:hover {
-          background: #6d28d9 !important;
-          transform: scale(1.02) !important;
-        }
+  width: 100% !important;
+  padding: 16px 24px !important;
+  background: #7c3aed !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.4) !important;
+  margin-top: 8px !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  display: block !important;
+  position: relative !important;
+  z-index: 10 !important;
+  -webkit-transform: translateZ(0) !important;
+  transform: translateZ(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+}
+#hubspot-form-container .hs-form .hs-button:hover {
+  background: #6d28d9 !important;
+  transform: scale(1.02) !important;
+}
+#hubspot-form-container .hs-submit {
+  display: block !important;
+  width: 100% !important;
+  position: relative !important;
+  z-index: 10 !important;
+  overflow: visible !important;
+}
+#hubspot-form-container .actions {
+  display: block !important;
+  width: 100% !important;
+  overflow: visible !important;
+  padding-bottom: 8px !important;
+}
         #hubspot-form-container .hs-form .hs-richtext {
           color: rgba(75, 85, 99, 1) !important;
           font-size: 12px !important;
@@ -655,7 +695,7 @@ function HeroSection({ formRef, formHighlight }: { formRef: React.RefObject<HTML
         <motion.div
           ref={formRef}
           variants={itemVariants}
-          className={`relative bg-white/80 backdrop-blur-xl border-2 rounded-3xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-[border-color] duration-700 ease-in-out ${formHighlight ? 'border-[#7c3aed]/70' : 'border-white/10'
+          className={`relative bg-white/80 backdrop-blur-xl border-2 rounded-3xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-[border-color] duration-700 ease-in-out overflow-visible ${formHighlight ? 'border-[#7c3aed]/70' : 'border-white/10'
             }`}
         >
           {/* Gradient overlay */}
